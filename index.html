@@ -5,7 +5,19 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Promptfolio — Trending AI image prompts</title>
 <meta name="description" content="A catalog of trending image-generation prompts for Gemini and ChatGPT. Copy and go.">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#15130f">
+<meta property="og:type" content="website">
+<meta property="og:title" content="Promptfolio — Trending AI image prompts">
+<meta property="og:description" content="A searchable catalog of image-generation prompts for Gemini and ChatGPT. Copy and create.">
+<meta property="og:image" content="assets/promptfolio-social.svg">
+<meta property="og:image:alt" content="Promptfolio — trending AI image prompts for Gemini and ChatGPT">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Promptfolio — Trending AI image prompts">
+<meta name="twitter:description" content="A searchable catalog of image-generation prompts for Gemini and ChatGPT. Copy and create.">
+<meta name="twitter:image" content="assets/promptfolio-social.svg">
 
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,wght@0,500;0,600;1,500&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -40,7 +52,11 @@
         <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
         <input id="search-input" type="text" placeholder="Search prompts…" aria-label="Search prompts">
       </div>
-      <nav class="pills" id="filter-pills" aria-label="Filter by model"></nav>
+      <nav class="pills category-pills" id="category-pills" aria-label="Filter by category"></nav>
+      <button class="theme-toggle" id="theme-toggle" type="button" aria-label="Switch to light mode" aria-pressed="false">
+        <span class="theme-toggle-icon" aria-hidden="true">☀</span>
+        <span class="theme-toggle-label">Light mode</span>
+      </button>
     </div>
   </div>
 </header>
@@ -48,8 +64,8 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <h1>Trending prompts for <em>Gemini and ChatGPT.</em></h1>
-      <p>A running catalog of useful image-generation prompts for Gemini and ChatGPT — grouped by model, ready to copy.</p>
+      <h1>Trending prompts for <em>AI image creation.</em></h1>
+      <p>A running catalog of useful image-generation prompts you can use with Gemini, ChatGPT, and other AI tools — ready to copy.</p>
     </div>
     <div class="ticker" aria-hidden="true">
       <div class="ticker-track" id="ticker-track"></div>
@@ -66,7 +82,7 @@
 <footer class="site-footer">
   <div class="wrap">
     <span>Built for GitHub Pages · prompts are text only, no images are hosted here.</span>
-    <span>Model names are used only to describe compatibility. See the <a href="README.md">README</a> to add new prompts.</span>
+    <span>Use the prompts with your preferred AI image tool. See the <a href="README.md">README</a> to add new prompts.</span>
   </div>
 </footer>
 

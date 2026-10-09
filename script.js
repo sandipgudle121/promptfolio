@@ -2,13 +2,36 @@
   "use strict";
 
   const sectionsRoot = document.getElementById("sections");
-  const pillsRoot = document.getElementById("filter-pills");
+  const categoryPillsRoot = document.getElementById("category-pills");
   const searchInput = document.getElementById("search-input");
   const noResults = document.getElementById("no-results");
   const tickerTrack = document.getElementById("ticker-track");
+  const themeToggle = document.getElementById("theme-toggle");
 
-  let activeModel = "all";
+  let activeCategory = "all";
   let query = "";
+
+  function setTheme(theme) {
+    const isLight = theme === "light";
+    document.documentElement.dataset.theme = theme;
+    document.querySelector('meta[name="theme-color"]').setAttribute("content", isLight ? "#f7f3eb" : "#15130f");
+    themeToggle.setAttribute("aria-pressed", String(isLight));
+    themeToggle.setAttribute("aria-label", isLight ? "Switch to dark mode" : "Switch to light mode");
+    themeToggle.querySelector(".theme-toggle-icon").textContent = isLight ? "◐" : "☀";
+    themeToggle.querySelector(".theme-toggle-label").textContent = isLight ? "Dark mode" : "Light mode";
+  }
+
+  function initializeTheme() {
+    const savedTheme = localStorage.getItem("promptfolio-theme");
+    const preferredTheme = window.matchMedia("(prefers-color-scheme: light)").matches ? "light" : "dark";
+    setTheme(savedTheme || preferredTheme);
+  }
+
+  themeToggle.addEventListener("click", () => {
+    const nextTheme = document.documentElement.dataset.theme === "light" ? "dark" : "light";
+    setTheme(nextTheme);
+    localStorage.setItem("promptfolio-theme", nextTheme);
+  });
 
   function escapeHtml(str) {
     const div = document.createElement("div");
@@ -70,81 +93,85 @@
     `;
   }
 
-  // ---------- Build filter pills ----------
-  function buildPills() {
+  // ---------- Build category filters ----------
+  function buildCategoryPills() {
+    const categories = [...new Set(PROMPT_DATA.map((prompt) => prompt.category))];
     const all = document.createElement("button");
     all.className = "pill active";
-    all.textContent = "All";
-    all.dataset.model = "all";
-    pillsRoot.appendChild(all);
+    all.textContent = "All categories";
+    all.dataset.category = "all";
+    categoryPillsRoot.appendChild(all);
 
-    PROMPT_DATA.forEach((model) => {
+    categories.forEach((category) => {
       const pill = document.createElement("button");
       pill.className = "pill";
-      pill.textContent = model.name;
-      pill.dataset.model = model.id;
-      pillsRoot.appendChild(pill);
+      pill.textContent = category;
+      pill.dataset.category = category;
+      categoryPillsRoot.appendChild(pill);
     });
 
-    pillsRoot.addEventListener("click", (e) => {
+    categoryPillsRoot.addEventListener("click", (e) => {
       const btn = e.target.closest(".pill");
       if (!btn) return;
-      activeModel = btn.dataset.model;
-      [...pillsRoot.children].forEach((c) => c.classList.toggle("active", c === btn));
+      activeCategory = btn.dataset.category;
+      [...categoryPillsRoot.children].forEach((c) => c.classList.toggle("active", c === btn));
       applyFilters();
-      if (activeModel !== "all") {
-        const target = document.getElementById("section-" + activeModel);
-        if (target) target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
     });
   }
 
   // ---------- Build sections ----------
   function buildSections() {
-    PROMPT_DATA.forEach((model) => {
-      const section = document.createElement("section");
-      section.className = "model-section";
-      section.id = "section-" + model.id;
-      section.style.setProperty("--m-accent", model.accent);
-      section.style.setProperty("--m-accent2", model.accent2);
-
-      section.innerHTML = `
-        <div class="wrap">
-          <div class="model-head">
-            <div class="model-head-left">
-              <span class="model-dot"></span>
-              <h2>${escapeHtml(model.name)}</h2>
-              <span class="model-maker">${escapeHtml(model.maker)}</span>
-            </div>
-            <span class="model-count">${model.prompts.length} prompts</span>
+    const prompts = PROMPT_DATA;
+    const catalog = {
+      id: "all",
+      accent: "#e8b94b",
+      accent2: "#f0cd7c"
+    };
+    const section = document.createElement("section");
+    section.className = "model-section";
+    section.id = "section-prompts";
+    section.style.setProperty("--m-accent", catalog.accent);
+    section.style.setProperty("--m-accent2", catalog.accent2);
+    section.innerHTML = `
+      <div class="wrap">
+        <div class="model-head">
+          <div class="model-head-left">
+            <span class="model-dot"></span>
+            <h2>All prompts</h2>
+            <span class="model-maker">For Gemini, ChatGPT, and other AI image tools</span>
           </div>
-          <p class="model-blurb">${escapeHtml(model.blurb)}</p>
-          <hr class="model-rule">
-          <div class="card-grid" data-model="${model.id}"></div>
+          <span class="model-count">${prompts.length} prompts</span>
         </div>
-      `;
+        <p class="model-blurb">A growing collection of image-generation and photo-editing prompts, ready to copy and adapt to your preferred AI tool.</p>
+        <hr class="model-rule">
+        <div class="card-grid" data-catalog="all"></div>
+      </div>
+    `;
 
-      const grid = section.querySelector(".card-grid");
-      model.prompts.forEach((prompt, idx) => {
-        grid.appendChild(buildCard(model, prompt, idx));
-      });
-
-      sectionsRoot.appendChild(section);
-    });
+    const grid = section.querySelector(".card-grid");
+    prompts.forEach((prompt, idx) => grid.appendChild(buildCard(catalog, prompt, idx)));
+    sectionsRoot.appendChild(section);
   }
 
   function buildCard(model, prompt, idx) {
     const card = document.createElement("article");
     card.className = "card";
     card.dataset.model = model.id;
-    card.dataset.search = (prompt.title + " " + prompt.tag + " " + prompt.text).toLowerCase();
+    card.dataset.category = prompt.category;
+    card.dataset.search = (prompt.title + " " + prompt.tag + " " + prompt.category + " " + prompt.text).toLowerCase();
+    const preview = prompt.image
+      ? `<img class="card-sample-image" src="${escapeHtml(prompt.image)}" alt="${escapeHtml(prompt.title)} sample image" loading="lazy">`
+      : buildPreviewSvg(model, idx, prompt.tag);
 
     card.innerHTML = `
-      <div class="card-preview">${buildPreviewSvg(model, idx, prompt.tag)}</div>
+      <div class="card-preview">${preview}</div>
       <div class="card-body">
         <div class="card-top">
-          <span class="card-title">${escapeHtml(prompt.title)}</span>
-          <span class="tag-chip">${escapeHtml(prompt.tag)}</span>
+          <div>
+            <span class="card-title">${escapeHtml(prompt.title)}</span>
+            ${prompt.badge ? `<span class="prompt-badge ${prompt.badge === "New" ? "is-new" : ""}">${escapeHtml(prompt.badge)}</span>` : ""}
+          </div>
+          <span class="tag-chip">${escapeHtml(prompt.category)}</span>
         </div>
         <p class="card-text">${escapeHtml(prompt.text)}</p>
         <div class="card-foot">
@@ -155,6 +182,13 @@
 
     const btn = card.querySelector(".copy-btn");
     btn.addEventListener("click", () => copyPrompt(prompt.text, btn));
+
+    const sampleImage = card.querySelector(".card-sample-image");
+    if (sampleImage) {
+      sampleImage.addEventListener("error", () => {
+        sampleImage.parentElement.innerHTML = buildPreviewSvg(model, idx, prompt.tag);
+      });
+    }
     return card;
   }
 
@@ -191,9 +225,10 @@
   // ---------- Ticker ----------
   function buildTicker() {
     const picks = [];
-    PROMPT_DATA.forEach((model) => {
-      model.prompts.slice(0, 2).forEach((p) => {
-        picks.push({ label: model.name + " — " + p.title, color: model.accent });
+    PROMPT_DATA.slice(0, 8).forEach((prompt, index) => {
+      picks.push({
+        label: prompt.title,
+        color: index % 2 === 0 ? "#e8b94b" : "#74aa9c"
       });
     });
     // duplicate the list so the CSS animation (translateX -50%) loops seamlessly
@@ -212,13 +247,12 @@
     let anyVisible = false;
 
     document.querySelectorAll(".model-section").forEach((section) => {
-      const modelId = section.id.replace("section-", "");
-      const modelMatches = activeModel === "all" || activeModel === modelId;
       let sectionHasVisible = false;
 
       section.querySelectorAll(".card").forEach((card) => {
         const textMatches = !query || card.dataset.search.includes(query);
-        const visible = modelMatches && textMatches;
+        const categoryMatches = activeCategory === "all" || activeCategory === card.dataset.category;
+        const visible = categoryMatches && textMatches;
         card.style.display = visible ? "" : "none";
         if (visible) sectionHasVisible = true;
       });
@@ -233,7 +267,8 @@
   searchInput.addEventListener("input", applyFilters);
 
   // ---------- Init ----------
-  buildPills();
+  initializeTheme();
+  buildCategoryPills();
   buildSections();
   buildTicker();
   applyFilters();

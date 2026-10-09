@@ -1,6 +1,6 @@
 # Promptography
 
-A simple, static site that catalogs trending AI image-generation prompts for Gemini and ChatGPT. No backend, no build step — just HTML, CSS, and vanilla JS, so it hosts for free on GitHub Pages.
+A simple, static site that catalogs trending AI image-generation prompts. The prompts can be used with Gemini, ChatGPT, and other compatible tools. No backend or build step — just HTML, CSS, and vanilla JS, so it hosts for free on GitHub Pages.
 
 ## Host it on GitHub Pages (free)
 
@@ -17,30 +17,30 @@ That's it — no build tools, no npm install, nothing else to configure.
 
 ## Add or edit prompts
 
-All content lives in `prompts-data.js`. Gemini and ChatGPT each have one object in the `PROMPT_DATA` array:
+All content lives in `prompts-data.js`. Prompts are displayed together in one catalog and can be filtered by category. Add each new prompt object directly to the `PROMPT_DATA` array:
 
 ```js
 {
-  id: "gemini",              // used internally, keep it lowercase-with-dashes
-  name: "Gemini",            // shown as the section heading
-  maker: "Google · Nano Banana",
-  accent: "#8AB4F8",         // section accent color
-  accent2: "#C58AF9",
-  blurb: "One line describing what this model is good at.",
-  prompts: [
-    {
-      title: "Short name for the prompt",
-      tag: "Category, e.g. Portrait",
-      text: "The full prompt text a person will copy."
-    }
-    // add as many prompt objects as you like
-  ]
+  title: "Short name for the prompt",
+  tag: "Short label, e.g. Studio portrait",
+  category: "Portrait",    // used by the category filter
+  badge: "New",            // optional: "New" or "Popular"
+  image: "assets/samples/example.jpg", // optional: sample image shown on the card
+  text: "The full prompt text a person will copy."
 }
 ```
 
-Edit the matching model object to add or update prompts. The page rebuilds the layout, filter pills, and search index automatically from this file — no HTML editing needed.
+Add or update a prompt in `prompts-data.js`. The page rebuilds the layout, category filters, and search index automatically from this file — no HTML editing needed.
+
+## Add sample images
+
+Place a sample image in `assets/samples/`, then add its relative path in the prompt's optional `image` field. For example: `image: "assets/samples/birthday-poster.jpg"`. Supported web formats such as JPG, PNG, and WebP work well. If the field is omitted or the image cannot load, Promptfolio uses its generated preview instead.
+
+## Contributing prompts
+
+Suggestions and pull requests are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) for the quality guidelines and use the prompt-submission issue template to suggest a new entry.
 
 ## Notes
 
-- Model names are used only to describe which tool a prompt is written for; this project isn't affiliated with Google or OpenAI.
+- This project isn't affiliated with Google or OpenAI.
 - Everything runs client-side — the "Copy prompt" button uses the browser clipboard API with a manual-copy fallback for older browsers.
