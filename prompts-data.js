@@ -7,7 +7,7 @@ const PROMPT_DATA = [
     title: "3D shelf figurine",
     tag: "Figurine",
     category: "3D",
-    image: "assets/samples/3d-shelf-figurine.png",
+    image: "assets/samples/3d-shelf-figurine.jpeg",
     seoSlug: "3d-shelf-figurine",
     badge: "Featured",
     text: "Turn the uploaded photo into a 1/7 scale collectible figurine standing on a desk. Realistic PVC material, soft studio lighting, visible sculpted details on clothing and hair. Place it on a circular acrylic base in front of its own product packaging box, the box art showing a stylized illustration of the same character. Add a computer monitor blurred in the background."
@@ -16,7 +16,7 @@ const PROMPT_DATA = [
     title: "Studio headshot",
     tag: "Portrait",
     category: "Portrait",
-    image: "assets/samples/Studio-headshot.png",
+    image: "assets/samples/Studio-headshot.jpeg",
     seoSlug: "studio-headshot",
     badge: "Featured",
     text: "Professional corporate headshot of the person in the reference photo. Plain light-grey seamless background, soft diffused key light from the front-left, gentle fill from the right. Sharp focus on the eyes, natural skin texture, no heavy retouching. Shot on an 85mm lens at f/4 with a shallow depth of field. Neutral, confident expression."
@@ -25,14 +25,16 @@ const PROMPT_DATA = [
     title: "Festival portrait",
     tag: "Fashion",
     category: "Portrait",
-    image: "assets/samples/Festival-portrait.png",
+    image: "assets/samples/Festival-portrait.jpeg",
+    seoSlug: "festival-portrait",
     text: "Keep the same face and features from the reference photo. Dress the subject in an intricately embroidered traditional outfit with gold thread detailing. Golden-hour light, shallow depth of field, marigold flowers softly blurred in the background. Warm, cinematic color grade with gentle film grain."
   },
   {
     title: "City-of-the-world scene",
     tag: "Travel",
     category: "Travel",
-    image: "assets/samples/City-of-the-world-scene.png",
+    image: "assets/samples/City-of-the-world-scene.jpeg",
+    seoSlug: "city-of-the-world-scene",
     badge: "Featured",
     text: "Place the subject from the reference photo into a rainy evening street in Tokyo's Shinjuku district, neon signs reflecting on wet pavement. Cinematic wide shot, shallow depth of field, subject holding a clear umbrella. Preserve the subject's exact face and proportions while matching the ambient neon color temperature on their skin."
   },
@@ -40,20 +42,24 @@ const PROMPT_DATA = [
     title: "Isometric room diorama",
     tag: "3D scene",
     category: "3D",
-    image: "assets/samples/Isometric-room-diorama.png",
+    image: "assets/samples/Isometric-room-diorama.jpeg",
+    seoSlug: "isometric-room-diorama",
     text: "A cutaway isometric diorama of a cozy reading nook: a window seat with cushions, tall bookshelf, hanging plant, and a cat curled up asleep. Soft pastel color palette, clean vector-style shading, subtle drop shadows, presented like a miniature dollhouse cross-section on a plain background."
   },
   {
     title: "Retro film restoration",
     tag: "Restoration",
     category: "Photo Editing",
-    image: "assets/samples/Retro-film-restoration.png",
+    image: "assets/samples/Retro-film-restoration.jpeg",
+    seoSlug: "retro-film-restoration",
     text: "Restore and colorize this old, faded photograph. Repair scratches, dust, and creases, sharpen fine detail on the faces, and apply natural, historically accurate skin tones and clothing colors. Keep the original grain and composition; do not alter anyone's face shape or expression."
   },
   {
     title: "Infographic poster",
     tag: "Text & layout",
     category: "Graphic Design",
+    image: "assets/samples/Infographic-poster.jpeg",
+    seoSlug: "infographic-poster",
     badge: "Featured",
     text: "Design a clean educational poster titled 'The Water Cycle' with crisp, legible headline text. Include four labeled stages — evaporation, condensation, precipitation, collection — each with a small illustrated icon and one short caption line. Soft blue-and-white palette, generous whitespace, flat modern illustration style."
   },
@@ -61,6 +67,8 @@ const PROMPT_DATA = [
     title: "Hand-painted animated scene",
     tag: "Illustration",
     category: "Illustration",
+    image: "assets/samples/Hand-painted-animated-scene.jpeg",
+    seoSlug: "hand-painted-animated-scene",
     badge: "Featured",
     text: "Redraw this photo as a hand-painted animated film scene: soft watercolor backgrounds, warm natural light, gentle painterly linework on the characters, and a lightly hazy, nostalgic atmosphere. Keep the composition and the subject's pose exactly as in the original photo."
   },
@@ -68,12 +76,16 @@ const PROMPT_DATA = [
     title: "Claymation character",
     tag: "3D style",
     category: "3D",
+    image: "assets/samples/Claymation-character.jpeg",
+    seoSlug: "claymation-character",
     text: "Reimagine the subject as a stop-motion claymation character, with visible fingerprint texture on the clay, slightly asymmetrical hand-sculpted features, and a matte plasticine finish. Set against a miniature handcrafted set with warm tungsten lighting, like a frame from a classic clay-animation film."
   },
   {
     title: "Vintage travel poster",
     tag: "Poster",
     category: "Graphic Design",
+    image: "assets/samples/Vintage-travel-poster.jpeg",
+    seoSlug: "vintage-travel-poster",
     badge: "Featured",
     text: "Design a mid-century travel poster for a coastal town, in the style of 1960s tourism prints: flat bold color blocks, simplified geometric shapes for the cliffs and sailboats, a warm sunset gradient sky, and elegant condensed lettering for the destination name integrated cleanly into the composition."
   },
@@ -81,6 +93,7 @@ const PROMPT_DATA = [
     title: "Product mockup",
     tag: "Product",
     category: "Product",
+    image: "assets/samples/Product-mockup.jpeg",
     seoSlug: "product-mockup",
     badge: "Featured",
     text: "Photorealistic studio product shot of a matte ceramic coffee mug on a marble surface, soft top-down natural light, subtle reflection, steam rising gently from the coffee. Minimal styling: one small spoon and a few coffee beans scattered nearby. Clean, neutral background suitable for an e-commerce listing."
@@ -89,6 +102,8 @@ const PROMPT_DATA = [
     title: "Editorial comic panel",
     tag: "Comic",
     category: "Illustration",
+    image: "assets/samples/Editorial-comic-panel.jpeg",
+    seoSlug: "editorial-comic-panel",
     text: "A single comic-book panel drawn in a bold mid-century pulp-adventure style: dynamic diagonal composition, halftone shading, a punchy limited color palette of red, cream, and navy, and one short exclamatory caption box in the corner. Thick expressive linework around the main figure."
   },
   {

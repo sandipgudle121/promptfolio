@@ -11,6 +11,14 @@ $data = Get-Content -Raw -Encoding UTF8 $dataPath
 $slugMatches = [regex]::Matches($data, '(?m)^\s*seoSlug:\s*"([^"]+)"\s*,?\s*$')
 $slugs = @($slugMatches | ForEach-Object { $_.Groups[1].Value })
 
+$promptEntries = $data -split '(?m)^\s*\},?\s*$'
+foreach ($entry in $promptEntries) {
+    $titleMatch = [regex]::Match($entry, '(?m)^\s*title:\s*"([^"]+)"')
+    if ($titleMatch.Success -and $entry -match '(?m)^\s*image:\s*"' -and $entry -notmatch '(?m)^\s*seoSlug:\s*"') {
+        throw "Prompt '$($titleMatch.Groups[1].Value)' has a sample image but no seoSlug."
+    }
+}
+
 if (@($slugs | Select-Object -Unique).Count -ne $slugs.Count) {
     throw "Duplicate seoSlug values found in prompts-data.js."
 }
