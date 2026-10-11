@@ -1,5 +1,5 @@
 /* ---------------------------------------------------------
-   Promptography — token system
+   Promptfolio — token system
    Canvas:  #15130F   Surface: #1E1B16   Surface-2: #24201A
    Line:    #34302A   Ink:     #F2EDE4   Ink-muted: #A69C8D
    Accent (site-wide, used sparingly): #E8B94B (darkroom amber)
@@ -366,9 +366,14 @@ a { color: inherit; }
 }
 
 .card-title {
+  display: inline;
+  margin: 0;
   font-weight: 600;
   font-size: 15.5px;
 }
+
+.card-title a { text-decoration: none; }
+.card-title a:hover { color: var(--gold); text-decoration: underline; text-underline-offset: 3px; }
 
 .prompt-badge {
   display: inline-block;
@@ -384,8 +389,6 @@ a { color: inherit; }
   text-transform: uppercase;
   vertical-align: middle;
 }
-
-.prompt-badge.is-new { color: #fff; background: #43806e; }
 
 .tag-chip {
   font-size: 11.5px;
@@ -409,6 +412,7 @@ a { color: inherit; }
   display: flex;
   align-items: center;
   justify-content: flex-end;
+  gap: 8px;
   padding-top: 4px;
 }
 
@@ -433,12 +437,38 @@ a { color: inherit; }
   border-color: var(--gold);
 }
 
+.copy-btn.copy-failed {
+  color: #d6685f;
+  border-color: #d6685f;
+}
+
+.copy-status {
+  color: var(--ink-muted);
+  font-size: 12px;
+}
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .no-results {
   color: var(--ink-muted);
   font-size: 15px;
   padding: 12px 0 4px;
   display: none;
 }
+
+.noscript-prompts { padding-top: 40px; padding-bottom: 12px; }
+.noscript-prompts h2 { font-family: var(--font-display); }
+.noscript-prompts li { margin: 8px 0; }
 
 /* ---------------- Footer ---------------- */
 

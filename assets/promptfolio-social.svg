@@ -1,6 +1,6 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="title description">
-  <title id="title">Promptfolio — Trending AI image prompts</title>
-  <desc id="description">A catalog of image-generation prompts for Gemini and ChatGPT.</desc>
+  <title id="title">Promptfolio — AI image prompts for creation and editing</title>
+  <desc id="description">A curated library of image-generation and photo-editing prompts for Gemini and ChatGPT.</desc>
   <defs>
     <linearGradient id="backdrop" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#15130f"/><stop offset="1" stop-color="#272016"/></linearGradient>
     <linearGradient id="cardOne" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#8ab4f8"/><stop offset="1" stop-color="#c58af9"/></linearGradient>
@@ -9,8 +9,8 @@
   <rect width="1200" height="630" fill="url(#backdrop)"/>
   <circle cx="1070" cy="45" r="260" fill="#e8b94b" opacity=".08"/>
   <text x="90" y="105" fill="#e8b94b" font-family="Georgia, serif" font-size="38" font-weight="700">Promptfolio</text>
-  <text x="90" y="237" fill="#f2ede4" font-family="Georgia, serif" font-size="78" font-weight="700">Trending AI</text>
-  <text x="90" y="323" fill="#f2ede4" font-family="Georgia, serif" font-size="78" font-weight="700">image prompts.</text>
+  <text x="90" y="237" fill="#f2ede4" font-family="Georgia, serif" font-size="78" font-weight="700">AI image</text>
+  <text x="90" y="323" fill="#f2ede4" font-family="Georgia, serif" font-size="78" font-weight="700">Create with AI.</text>
   <text x="94" y="385" fill="#c8beb0" font-family="Arial, sans-serif" font-size="27">Curated prompts for Gemini and ChatGPT — ready to copy.</text>
   <g transform="translate(760 154)">
     <rect width="340" height="178" rx="18" fill="#1e1b16" stroke="#4b4338"/>

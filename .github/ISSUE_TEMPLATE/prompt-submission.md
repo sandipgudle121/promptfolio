@@ -12,7 +12,7 @@ Which model was this tested with? (Gemini, ChatGPT, or another supported model.)
 ## Title and category
 
 - **Title:**
-- **Category:** Portrait, Product, Illustration, 3D, Travel, or Design
+- **Category:** Portrait, Product, Illustration, 3D, Travel, Photo Editing, Graphic Design, Architecture, or Document
 - **Tag:**
 
 ## Prompt text

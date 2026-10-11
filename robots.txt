@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://sandipgudle121.github.io/promptfolio/sitemap.xml

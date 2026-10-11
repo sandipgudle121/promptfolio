@@ -3,19 +3,25 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Promptfolio — Trending AI image prompts</title>
-<meta name="description" content="A catalog of trending image-generation prompts for Gemini and ChatGPT. Copy and go.">
+<title>Promptfolio — AI image prompts for creation and editing</title>
+<meta name="description" content="Browse a hand-curated library of copy-ready AI image-generation and photo-editing prompts for Gemini, ChatGPT, and other tools.">
 <meta name="robots" content="index, follow">
+<meta name="google-site-verification" content="-N_-Dj66fz3mbdGaG0fupdtygIK__zcoS9yj7TGUgdE">
 <meta name="theme-color" content="#15130f">
+<link rel="canonical" href="https://sandipgudle121.github.io/promptfolio/">
+<meta property="og:url" content="https://sandipgudle121.github.io/promptfolio/">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Promptfolio — Trending AI image prompts">
-<meta property="og:description" content="A searchable catalog of image-generation prompts for Gemini and ChatGPT. Copy and create.">
-<meta property="og:image" content="assets/promptfolio-social.svg">
-<meta property="og:image:alt" content="Promptfolio — trending AI image prompts for Gemini and ChatGPT">
+<meta property="og:title" content="Promptfolio — AI image prompts for creation and editing">
+<meta property="og:description" content="Browse a hand-curated library of copy-ready AI image-generation and photo-editing prompts.">
+<meta property="og:image" content="https://sandipgudle121.github.io/promptfolio/assets/social/home.jpg">
+<meta property="og:image:alt" content="Promptfolio — a curated library of AI image prompts">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Promptfolio — Trending AI image prompts">
-<meta name="twitter:description" content="A searchable catalog of image-generation prompts for Gemini and ChatGPT. Copy and create.">
-<meta name="twitter:image" content="assets/promptfolio-social.svg">
+<meta name="twitter:title" content="Promptfolio — AI image prompts for creation and editing">
+<meta name="twitter:description" content="Browse a hand-curated library of copy-ready AI image-generation and photo-editing prompts.">
+<meta name="twitter:image" content="https://sandipgudle121.github.io/promptfolio/assets/social/home.jpg">
 
 <link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -64,7 +70,7 @@
 <main>
   <section class="hero">
     <div class="wrap">
-      <h1>Trending prompts for <em>AI image creation.</em></h1>
+      <h1>Prompts for <em>AI image creation.</em></h1>
       <p>A running catalog of useful image-generation prompts you can use with Gemini, ChatGPT, and other AI tools — ready to copy.</p>
     </div>
     <div class="ticker" aria-hidden="true">
@@ -73,15 +79,45 @@
   </section>
 
   <div class="wrap">
+    <p class="results-status sr-only" id="results-status" role="status" aria-live="polite" aria-atomic="true"></p>
     <p class="no-results" id="no-results">No prompts match your search. Try a different keyword or clear the filter.</p>
   </div>
 
   <div id="sections"></div>
+  <noscript>
+    <section class="noscript-prompts wrap" aria-label="AI image prompt catalog">
+      <h2>AI image prompt catalog</h2>
+      <p>JavaScript is disabled. Browse the prompt summaries below, or open a featured prompt page for the complete copy-ready text and usage tips.</p>
+      <ul>
+        <li><a href="prompts/3d-shelf-figurine.html">3D shelf figurine</a> — Turn a reference photo into a detailed collectible desk figurine.</li>
+        <li><a href="prompts/studio-headshot.html">Studio headshot</a> — Create a natural professional portrait with soft studio lighting.</li>
+        <li>Festival portrait — Keep the subject recognizable in embroidered traditional clothing and warm golden-hour light.</li>
+        <li>City-of-the-world scene — Place a subject in a rainy neon-lit Tokyo street while preserving their identity.</li>
+        <li>Isometric room diorama — Create a pastel miniature reading nook with a window seat, bookshelf, plant, and cat.</li>
+        <li>Retro film restoration — Repair and colorize an old photograph while preserving its grain and composition.</li>
+        <li>Infographic poster — Design a clear water-cycle poster with four labeled stages and a soft blue palette.</li>
+        <li>Hand-painted animated scene — Redraw a photo with soft watercolor backgrounds and gentle painterly linework.</li>
+        <li>Claymation character — Reimagine a subject as a hand-sculpted stop-motion clay character.</li>
+        <li>Vintage travel poster — Design a mid-century coastal travel poster with bold shapes and a sunset palette.</li>
+        <li><a href="prompts/product-mockup.html">Product mockup</a> — Create a clean studio product photo for an e-commerce listing.</li>
+        <li>Editorial comic panel — Create a dynamic pulp-adventure comic panel with halftone shading and expressive linework.</li>
+        <li>Architectural render — Render a warm minimalist Japandi living room with natural light and oak flooring.</li>
+        <li>Pixel-art icon set — Create six crisp, consistently styled icons for a cozy farming game.</li>
+        <li>Print-quality document scan — Flatten and clean a document while preserving every printed character and mark.</li>
+        <li>Professional passport portrait — Create a centered, neutral portrait with natural skin texture and even lighting.</li>
+        <li><a href="prompts/cinematic-color-grading.html">Cinematic color grading</a> — Add a restrained cinematic finish while preserving the photo's subject and composition.</li>
+        <li>Floral birthday poster — Design a celebratory portrait poster with floral details and teal typography.</li>
+        <li>Clear mirror photo — Clean mirror marks and improve image clarity without changing the subject's appearance.</li>
+        <li>Premium photo enhancement — Improve lighting, sharpness, and depth while keeping a photograph natural.</li>
+        <li><a href="prompts/restore-old-photos.html">Restore old photos</a> — Repair an aging image while preserving its composition and natural texture.</li>
+      </ul>
+    </section>
+  </noscript>
 </main>
 
 <footer class="site-footer">
   <div class="wrap">
-    <span>Built for GitHub Pages · prompts are text only, no images are hosted here.</span>
+    <span>Built for GitHub Pages · prompt examples and sample images are hosted here.</span>
     <span>Use the prompts with your preferred AI image tool. See the <a href="README.md">README</a> to add new prompts.</span>
   </div>
 </footer>

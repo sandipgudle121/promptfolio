@@ -5,6 +5,7 @@
   const categoryPillsRoot = document.getElementById("category-pills");
   const searchInput = document.getElementById("search-input");
   const noResults = document.getElementById("no-results");
+  const resultsStatus = document.getElementById("results-status");
   const tickerTrack = document.getElementById("ticker-track");
   const themeToggle = document.getElementById("theme-toggle");
 
@@ -100,6 +101,7 @@
     all.className = "pill active";
     all.textContent = "All categories";
     all.dataset.category = "all";
+    all.setAttribute("aria-pressed", "true");
     categoryPillsRoot.appendChild(all);
 
     categories.forEach((category) => {
@@ -107,6 +109,7 @@
       pill.className = "pill";
       pill.textContent = category;
       pill.dataset.category = category;
+      pill.setAttribute("aria-pressed", "false");
       categoryPillsRoot.appendChild(pill);
     });
 
@@ -114,7 +117,11 @@
       const btn = e.target.closest(".pill");
       if (!btn) return;
       activeCategory = btn.dataset.category;
-      [...categoryPillsRoot.children].forEach((c) => c.classList.toggle("active", c === btn));
+      [...categoryPillsRoot.children].forEach((categoryButton) => {
+        const isActive = categoryButton === btn;
+        categoryButton.classList.toggle("active", isActive);
+        categoryButton.setAttribute("aria-pressed", String(isActive));
+      });
       applyFilters();
     });
   }
@@ -142,7 +149,7 @@
           </div>
           <span class="model-count">${prompts.length} prompts</span>
         </div>
-        <p class="model-blurb">A growing collection of image-generation and photo-editing prompts, ready to copy and adapt to your preferred AI tool.</p>
+        <p class="model-blurb">A hand-curated selection of image-generation and photo-editing prompts, ready to copy and adapt to your preferred AI tool.</p>
         <hr class="model-rule">
         <div class="card-grid" data-catalog="all"></div>
       </div>
@@ -168,20 +175,21 @@
       <div class="card-body">
         <div class="card-top">
           <div>
-            <span class="card-title">${escapeHtml(prompt.title)}</span>
-            ${prompt.badge ? `<span class="prompt-badge ${prompt.badge === "New" ? "is-new" : ""}">${escapeHtml(prompt.badge)}</span>` : ""}
+            <h3 class="card-title">${prompt.seoSlug ? `<a href="prompts/${escapeHtml(prompt.seoSlug)}.html">${escapeHtml(prompt.title)}</a>` : escapeHtml(prompt.title)}</h3>
+            ${prompt.badge ? `<span class="prompt-badge">${escapeHtml(prompt.badge)}</span>` : ""}
           </div>
           <span class="tag-chip">${escapeHtml(prompt.category)}</span>
         </div>
         <p class="card-text">${escapeHtml(prompt.text)}</p>
         <div class="card-foot">
           <button class="copy-btn" type="button">Copy prompt</button>
+          <span class="copy-status" role="status" aria-live="polite"></span>
         </div>
       </div>
     `;
 
     const btn = card.querySelector(".copy-btn");
-    btn.addEventListener("click", () => copyPrompt(prompt.text, btn));
+    btn.addEventListener("click", () => copyPrompt(prompt.text, btn, card.querySelector(".copy-status")));
 
     const sampleImage = card.querySelector(".card-sample-image");
     if (sampleImage) {
@@ -192,34 +200,54 @@
     return card;
   }
 
-  function copyPrompt(text, btn) {
-    const done = () => {
-      const original = "Copy prompt";
-      btn.textContent = "Copied";
-      btn.classList.add("copied");
-      setTimeout(() => {
-        btn.textContent = original;
-        btn.classList.remove("copied");
-      }, 1600);
-    };
-
+  async function copyPrompt(text, btn, status) {
+    let copied = false;
     if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(done).catch(() => fallbackCopy(text, done));
+      try {
+        await navigator.clipboard.writeText(text);
+        copied = true;
+      } catch (error) {
+        copied = fallbackCopy(text, btn);
+      }
     } else {
-      fallbackCopy(text, done);
+      copied = fallbackCopy(text, btn);
     }
+    showCopyFeedback(btn, status, copied);
   }
 
-  function fallbackCopy(text, done) {
+  function fallbackCopy(text, btn) {
     const ta = document.createElement("textarea");
     ta.value = text;
     ta.style.position = "fixed";
     ta.style.opacity = "0";
+    ta.setAttribute("aria-hidden", "true");
+    ta.setAttribute("tabindex", "-1");
     document.body.appendChild(ta);
+    ta.focus();
     ta.select();
-    try { document.execCommand("copy"); } catch (e) { /* no-op */ }
+    let copied = false;
+    try {
+      copied = document.execCommand("copy");
+    } catch (error) {
+      copied = false;
+    }
     document.body.removeChild(ta);
-    done();
+    btn.focus();
+    return copied;
+  }
+
+  function showCopyFeedback(btn, status, copied) {
+    btn.textContent = copied ? "Copied" : "Copy failed";
+    btn.classList.toggle("copied", copied);
+    btn.classList.toggle("copy-failed", !copied);
+    status.textContent = copied
+      ? "Prompt copied to clipboard."
+      : "Copy failed. Select and copy the prompt manually.";
+    window.setTimeout(() => {
+      btn.textContent = "Copy prompt";
+      btn.classList.remove("copied", "copy-failed");
+      status.textContent = "";
+    }, 4000);
   }
 
   // ---------- Ticker ----------
@@ -245,6 +273,7 @@
   function applyFilters() {
     query = searchInput.value.trim().toLowerCase();
     let anyVisible = false;
+    let visibleCount = 0;
 
     document.querySelectorAll(".model-section").forEach((section) => {
       let sectionHasVisible = false;
@@ -254,7 +283,10 @@
         const categoryMatches = activeCategory === "all" || activeCategory === card.dataset.category;
         const visible = categoryMatches && textMatches;
         card.style.display = visible ? "" : "none";
-        if (visible) sectionHasVisible = true;
+        if (visible) {
+          sectionHasVisible = true;
+          visibleCount += 1;
+        }
       });
 
       section.style.display = sectionHasVisible ? "" : "none";
@@ -262,6 +294,9 @@
     });
 
     noResults.style.display = anyVisible ? "none" : "block";
+    resultsStatus.textContent = anyVisible
+      ? `${visibleCount} ${visibleCount === 1 ? "prompt" : "prompts"} found.`
+      : "No prompts match your search and category filters.";
   }
 
   searchInput.addEventListener("input", applyFilters);
