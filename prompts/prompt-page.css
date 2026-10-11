@@ -1,4 +1,4 @@
-@import url("../styles.css");
+@import url("../css/styles.css");
 
 .prompt-page { padding: 58px 0 72px; }
 .breadcrumbs { color: var(--ink-muted); font-size: 14px; margin-bottom: 34px; }

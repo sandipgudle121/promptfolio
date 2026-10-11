@@ -12,7 +12,7 @@ Thanks for helping improve the catalog. You can suggest a prompt through the **P
 
 ## Pull requests
 
-1. Add the prompt to the appropriate model in `prompts-data.js`.
+1. Add the prompt to the catalog in `js/prompts-data.js`.
 2. Include `title`, `tag`, `category`, and `text`. `badge` is optional; use `Featured` only for hand-selected entries.
 3. If adding a `seoSlug`, create a matching, substantive page in `prompts/`, add its canonical URL to `sitemap.xml`, and update the homepage's static summary list.
 4. Keep the prompt wording clear and check that the site still loads in a browser.

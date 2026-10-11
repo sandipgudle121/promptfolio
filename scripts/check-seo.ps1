@@ -2,7 +2,7 @@ $ErrorActionPreference = "Stop"
 
 $repositoryRoot = Split-Path -Parent $PSScriptRoot
 $siteBase = "https://sandipgudle121.github.io/promptfolio/"
-$dataPath = Join-Path $repositoryRoot "prompts-data.js"
+$dataPath = Join-Path $repositoryRoot "js/prompts-data.js"
 $sitemapPath = Join-Path $repositoryRoot "sitemap.xml"
 $robotsPath = Join-Path $repositoryRoot "robots.txt"
 $promptsDirectory = Join-Path $repositoryRoot "prompts"
@@ -20,7 +20,7 @@ foreach ($entry in $promptEntries) {
 }
 
 if (@($slugs | Select-Object -Unique).Count -ne $slugs.Count) {
-    throw "Duplicate seoSlug values found in prompts-data.js."
+    throw "Duplicate seoSlug values found in js/prompts-data.js."
 }
 
 [xml]$sitemap = Get-Content -Raw -Encoding UTF8 $sitemapPath

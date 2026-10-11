@@ -39,7 +39,7 @@ No account or installation required.
 
 ## Add or edit a prompt
 
-Prompt data lives in `prompts-data.js`. Each item needs a title, tag, category, and prompt text. A sample image and `Featured` badge are optional. Every prompt with a sample image should also have a `seoSlug` that points to its detail page:
+Prompt data lives in `js/prompts-data.js`. Each item needs a title, tag, category, and prompt text. A sample image and `Featured` badge are optional. Every prompt with a sample image should also have a `seoSlug` that points to its detail page:
 
 ```js
 {
@@ -63,7 +63,7 @@ The homepage includes a static prompt summary for visitors and crawlers when Jav
 
 Detail pages are hand-authored in `prompts/`. They include an introduction, the complete prompt, usage guidance, related links, and page-specific metadata.
 
-For prompts with sample images, add a `seoSlug` and create its matching page in `prompts/`. Keep the page's prompt text aligned with `prompts-data.js`, and add the page's canonical URL to `sitemap.xml`.
+For prompts with sample images, add a `seoSlug` and create its matching page in `prompts/`. Keep the page's prompt text aligned with `js/prompts-data.js`, and add the page's canonical URL to `sitemap.xml`.
 
 Each detail page needs:
 
@@ -86,7 +86,7 @@ Put sample images in `assets/samples/`, then set the prompt's `image` path to th
 
 ## Deploy with GitHub Pages
 
-1. Keep the site files and folders in the repository root, including `index.html`, `prompts-data.js`, `script.js`, `styles.css`, `prompts/`, `assets/`, `robots.txt`, and `sitemap.xml`.
+1. Keep `index.html`, `robots.txt`, and `sitemap.xml` at the repository root so GitHub Pages can serve the static site directly. Application code is organized in `js/` and `css/`, prompt pages are in `prompts/`, and images and icons are in `assets/`.
 2. In the repository, open **Settings → Pages**.
 3. Under **Build and deployment**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
 4. Open the published site and confirm the homepage and prompt detail pages load.
