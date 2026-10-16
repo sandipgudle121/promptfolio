@@ -86,7 +86,7 @@ Put sample images in `assets/samples/`, then set the prompt's `image` path to th
 
 ## Deploy with GitHub Pages
 
-1. Keep `index.html`, `robots.txt`, and `sitemap.xml` at the repository root so GitHub Pages can serve the static site directly. Application code is organized in `js/` and `css/`, prompt pages are in `prompts/`, and images and icons are in `assets/`.
+1. Keep `index.html`, `404.html`, `robots.txt`, and `sitemap.xml` at the repository root so GitHub Pages can serve the static site and custom not-found page directly. Application code is organized in `js/` and `css/`, prompt pages are in `prompts/`, and images and icons are in `assets/`.
 2. In the repository, open **Settings → Pages**.
 3. Under **Build and deployment**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
 4. Open the published site and confirm the homepage and prompt detail pages load.

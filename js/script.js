@@ -8,9 +8,32 @@
   const resultsStatus = document.getElementById("results-status");
   const tickerTrack = document.getElementById("ticker-track");
   const themeToggle = document.getElementById("theme-toggle");
+  const mobileMenuToggle = document.getElementById("mobile-menu-toggle");
+  const headerControls = document.getElementById("header-controls");
+  const copyrightYear = document.getElementById("copyright-year");
 
   let activeCategory = "all";
   let query = "";
+
+  function setMobileMenuOpen(isOpen) {
+    headerControls.classList.toggle("is-open", isOpen);
+    mobileMenuToggle.setAttribute("aria-expanded", String(isOpen));
+    mobileMenuToggle.querySelector(".mobile-menu-label").textContent = isOpen ? "Close" : "Menu";
+    mobileMenuToggle.querySelector(".mobile-menu-icon").textContent = isOpen ? "×" : "☰";
+  }
+
+  mobileMenuToggle.addEventListener("click", () => {
+    setMobileMenuOpen(mobileMenuToggle.getAttribute("aria-expanded") !== "true");
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && mobileMenuToggle.getAttribute("aria-expanded") === "true") {
+      setMobileMenuOpen(false);
+      mobileMenuToggle.focus();
+    }
+  });
+
+  copyrightYear.textContent = String(new Date().getFullYear());
 
   function setTheme(theme) {
     const isLight = theme === "light";
@@ -123,6 +146,7 @@
         categoryButton.setAttribute("aria-pressed", String(isActive));
       });
       applyFilters();
+      setMobileMenuOpen(false);
     });
   }
 
