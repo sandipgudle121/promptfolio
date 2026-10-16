@@ -148,11 +148,14 @@
     categoryPillsRoot.addEventListener("click", (e) => {
       const btn = e.target.closest(".pill");
       if (!btn) return;
-      activeCategory = btn.dataset.category;
-      trackEvent("category_filter", {
-        category: activeCategory,
-        page_type: "catalog"
-      });
+      const nextCategory = btn.dataset.category;
+      if (nextCategory !== activeCategory) {
+        activeCategory = nextCategory;
+        trackEvent("category_filter", {
+          category: activeCategory,
+          page_type: "catalog"
+        });
+      }
       [...categoryPillsRoot.children].forEach((categoryButton) => {
         const isActive = categoryButton === btn;
         categoryButton.classList.toggle("active", isActive);
