@@ -1,4 +1,29 @@
 (function () {
+  var measurementId = "G-WWH5ZLL6W2";
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+    var tag = document.createElement("script");
+    tag.async = true;
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+    document.head.appendChild(tag);
+  }
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId);
+
+  document.addEventListener("click", function (event) {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    let destination;
+    try { destination = new URL(link.href, window.location.href); } catch (error) { return; }
+    if (destination.origin === window.location.origin || !/^https?:$/.test(destination.protocol)) return;
+    window.gtag("event", "outbound_tool_click", {
+      destination_domain: destination.hostname,
+      link_text: (link.textContent || "").trim().slice(0, 100),
+      page_type: "prompt_detail"
+    });
+  });
+
   const button = document.querySelector("[data-copy]");
   const prompt = document.getElementById("prompt-text");
   const status = document.getElementById("copy-status");
@@ -58,5 +83,11 @@
     }
 
     showFeedback(copied);
+    if (copied) {
+      window.gtag("event", "prompt_copy", {
+        prompt_title: (document.querySelector("h1") || {}).textContent || document.title,
+        page_type: "prompt_detail"
+      });
+    }
   });
 }());
