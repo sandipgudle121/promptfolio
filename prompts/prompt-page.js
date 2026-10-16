@@ -1,4 +1,16 @@
 (function () {
+  var measurementId = "G-WWH5ZLL6W2";
+  window.dataLayer = window.dataLayer || [];
+  window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
+  if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+    var tag = document.createElement("script");
+    tag.async = true;
+    tag.src = "https://www.googletagmanager.com/gtag/js?id=" + measurementId;
+    document.head.appendChild(tag);
+  }
+  window.gtag("js", new Date());
+  window.gtag("config", measurementId);
+
   const button = document.querySelector("[data-copy]");
   const prompt = document.getElementById("prompt-text");
   const status = document.getElementById("copy-status");
