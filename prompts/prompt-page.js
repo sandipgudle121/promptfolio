@@ -70,5 +70,11 @@
     }
 
     showFeedback(copied);
+    if (copied) {
+      window.gtag("event", "prompt_copy", {
+        prompt_title: (document.querySelector("h1") || {}).textContent || document.title,
+        page_type: "prompt_detail"
+      });
+    }
   });
 }());
