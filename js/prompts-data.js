@@ -128,12 +128,15 @@ const PROMPT_DATA = [
     title: "Professional passport portrait",
     tag: "Passport photo",
     category: "Portrait",
+    image: "assets/samples/Professional-passport-portrait.jpeg",
+    seoSlug: "professional-passport-portrait",
     text: "Create an ultra-realistic, high-resolution passport-size portrait of the man from the reference image, preserving his exact face, facial structure, skin tone, proportions, eyes, nose, lips, jawline, eyebrows, and all unique facial features without any modifications. The identity must remain identical to the reference photo. He is facing directly toward the camera with a neutral, natural expression, and both eyes fully open. His head is perfectly centered with official passport-style framing, showing the shoulders and upper chest. Maintain natural skin texture with realistic pores and soft complexion—avoid excessive beauty filters or artificial smoothing. Style his hair with a neat, professional taper cut. The hair should be deep jet black, naturally styled, slightly shorter on the sides and neatly trimmed on top, suitable for a professional passport portrait. If applicable, keep neat, well-groomed facial hair (such as a clean, natural-looking five o'clock shadow). He is wearing a crisp plain white collared shirt with no patterns or logos. Use a pure white seamless studio background with soft, even lighting from both sides to eliminate harsh shadows. Ensure balanced exposure, true-to-life skin tones, sharp focus on the eyes, and high facial detail. The image should look like it was captured using a professional DSLR camera with an 85mm portrait lens, featuring realistic depth, natural color grading, studio-quality lighting, and ultra-high resolution."
   },
   {
     title: "Cinematic color grading",
     tag: "Color grading",
     category: "Photo Editing",
+    image: "assets/samples/Cinematic-color-grading.jpeg",
     seoSlug: "cinematic-color-grading",
     text: "Transform the uploaded photo into a premium, ultra-realistic professional photograph. Preserve the person's identity, facial features, hairstyle, clothing, pose, and background exactly as in the original image. Apply high-end cinematic color grading with natural skin tones, rich contrast, balanced exposure, HDR, deep blacks, soft highlights, vibrant yet realistic colors, subtle warm golden highlights, cool shadows, premium teal-and-orange cinematic tones (very light), DSLR-quality dynamic range, crystal-clear sharpness, realistic skin texture, depth of field, realistic lighting, soft bloom, premium Adobe Lightroom color science, Apple iPhone 16 Pro + Sony AI camera look, 85mm f/1.4 lens, ultra-detailed, noise-free, realistic shadows, natural white balance, editorial photography style, luxury magazine quality, 8K resolution, masterpiece. Do not oversaturate, do not change the person's face, body, clothing, or background composition. Keep everything natural and photorealistic."
   },
@@ -141,24 +144,31 @@ const PROMPT_DATA = [
     title: "Floral birthday poster",
     tag: "Birthday poster",
     category: "Graphic Design",
+    image: "assets/samples/Floral-birthday-poster.jpeg",
+    seoSlug: "floral-birthday-poster",
     text: "Create a premium birthday poster featuring a young Indian woman in a pink ethnic outfit, standing in front of oversized teal 'HAPPY BIRTHDAY' typography on a soft textured white paper background. Add pastel floral illustrations, a pink hibiscus flower, blue forget-me-nots, delicate butterfly, heart doodles, and elegant curved line art. Use soft natural lighting, minimal aesthetic design, clean composition, high detail, Instagram-ready, 4:5 ratio."
   },
   {
     title: "Clear mirror photo",
     tag: "Photo cleanup",
     category: "Photo Editing",
+    image: "assets/samples/Clear-mirror-photo.jpeg",
+    seoSlug: "clear-mirror-photo",
     text: "Clean mirror smudges and dirt, and enhance clarity, sharpness, and lighting. Keep my face, body, features, and proportions exactly the same. Make it look like a crisp, high-quality iPhone photo that is natural and realistic—not AI-generated."
   },
   {
     title: "Premium photo enhancement",
     tag: "Photo enhancement",
     category: "Photo Editing",
+    image: "assets/samples/Premium-photo-enhancement.jpeg",
+    seoSlug: "premium-photo-enhancement",
     text: "Turn this image into an ultra-realistic 8K DSLR-quality photo while keeping the subject and original look natural. Improve framing and composition automatically if needed using professional photography rules. Add realistic high-end background blur with smooth creamy bokeh and natural depth of field. Enhance lighting intelligently based on the scene with cinematic soft light, realistic shadows, natural skin tones, and subtle glow. Improve sharpness, textures, colors, and details while keeping everything realistic and premium, like a photo shot on an expensive DSLR or flagship iPhone camera. Avoid overediting, fake HDR, plastic skin, or AI-looking effects."
   },
   {
     title: "Restore old photos",
     tag: "Photo restoration",
     category: "Photo Editing",
+    image: "assets/samples/Restore-old-photos.jpeg",
     seoSlug: "restore-old-photos",
     text: "Create an ultra-high-resolution 4K restoration of the original image, preserving its exact composition and subject integrity. Enhance fine details to maximum clarity, including skin texture, fabric fibers, surface imperfections, micro-details, and environmental elements. Apply advanced denoising, remove compression artifacts, and eliminate grain while retaining natural texture. Restore damaged or aged areas with realistic reconstruction, including scratches, fading, blur, and motion artifacts. Improve sharpness while keeping the result natural and faithful to the original photo."
   }
