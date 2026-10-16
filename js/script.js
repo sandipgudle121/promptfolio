@@ -368,7 +368,6 @@
     if (destination.origin === window.location.origin || !/^https?:$/.test(destination.protocol)) return;
     trackEvent("outbound_tool_click", {
       destination_domain: destination.hostname,
-      link_url: destination.href,
       link_text: (link.textContent || "").trim().slice(0, 100),
       page_type: "catalog"
     });
