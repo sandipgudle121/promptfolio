@@ -11,6 +11,19 @@
   window.gtag("js", new Date());
   window.gtag("config", measurementId);
 
+  document.addEventListener("click", function (event) {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    let destination;
+    try { destination = new URL(link.href, window.location.href); } catch (error) { return; }
+    if (destination.origin === window.location.origin || !/^https?:$/.test(destination.protocol)) return;
+    window.gtag("event", "outbound_tool_click", {
+      destination_domain: destination.hostname,
+      link_text: (link.textContent || "").trim().slice(0, 100),
+      page_type: "prompt_detail"
+    });
+  });
+
   const button = document.querySelector("[data-copy]");
   const prompt = document.getElementById("prompt-text");
   const status = document.getElementById("copy-status");
