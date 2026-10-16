@@ -14,6 +14,15 @@
 
   let activeCategory = "all";
   let query = "";
+  let searchAnalyticsTimer = null;
+
+  function trackEvent(name, params) {
+    if (typeof window.gtag === "function") window.gtag("event", name, params || {});
+  }
+
+  function getVisiblePromptCount() {
+    return [...document.querySelectorAll(".card")].filter((card) => card.style.display !== "none").length;
+  }
 
   function setMobileMenuOpen(isOpen) {
     headerControls.classList.toggle("is-open", isOpen);
@@ -140,6 +149,10 @@
       const btn = e.target.closest(".pill");
       if (!btn) return;
       activeCategory = btn.dataset.category;
+      trackEvent("category_filter", {
+        category: activeCategory,
+        page_type: "catalog"
+      });
       [...categoryPillsRoot.children].forEach((categoryButton) => {
         const isActive = categoryButton === btn;
         categoryButton.classList.toggle("active", isActive);
@@ -213,7 +226,16 @@
     `;
 
     const btn = card.querySelector(".copy-btn");
-    btn.addEventListener("click", () => copyPrompt(prompt.text, btn, card.querySelector(".copy-status")));
+    btn.addEventListener("click", async () => {
+      const copied = await copyPrompt(prompt.text, btn, card.querySelector(".copy-status"));
+      if (copied) {
+        trackEvent("prompt_copy", {
+          prompt_title: prompt.title,
+          prompt_category: prompt.category,
+          page_type: "catalog"
+        });
+      }
+    });
 
     const sampleImage = card.querySelector(".card-sample-image");
     if (sampleImage) {
@@ -237,6 +259,7 @@
       copied = fallbackCopy(text, btn);
     }
     showCopyFeedback(btn, status, copied);
+    return copied;
   }
 
   function fallbackCopy(text, btn) {
@@ -323,7 +346,33 @@
       : "No prompts match your search and category filters.";
   }
 
-  searchInput.addEventListener("input", applyFilters);
+  searchInput.addEventListener("input", () => {
+    applyFilters();
+    window.clearTimeout(searchAnalyticsTimer);
+    const searchLength = searchInput.value.trim().length;
+    if (searchLength === 0) return;
+    searchAnalyticsTimer = window.setTimeout(() => {
+      trackEvent("prompt_search", {
+        search_length: searchLength,
+        result_count: getVisiblePromptCount(),
+        page_type: "catalog"
+      });
+    }, 600);
+  });
+
+  document.addEventListener("click", (event) => {
+    const link = event.target.closest("a[href]");
+    if (!link) return;
+    let destination;
+    try { destination = new URL(link.href, window.location.href); } catch (error) { return; }
+    if (destination.origin === window.location.origin || !/^https?:$/.test(destination.protocol)) return;
+    trackEvent("outbound_tool_click", {
+      destination_domain: destination.hostname,
+      link_url: destination.href,
+      link_text: (link.textContent || "").trim().slice(0, 100),
+      page_type: "catalog"
+    });
+  });
 
   // ---------- Init ----------
   initializeTheme();
