@@ -5,23 +5,7 @@ $siteBase = "https://sandipgudle121.github.io/promptfolio/"
 $dataPath = Join-Path $repositoryRoot "js/prompts-data.js"
 $sitemapPath = Join-Path $repositoryRoot "sitemap.xml"
 $robotsPath = Join-Path $repositoryRoot "robots.txt"
-$promptsDirectory = Join-Path $repositoryRoot "prompts"
-
 $data = Get-Content -Raw -Encoding UTF8 $dataPath
-$slugMatches = [regex]::Matches($data, '(?m)^\s*seoSlug:\s*"([^"]+)"\s*,?\s*$')
-$slugs = @($slugMatches | ForEach-Object { $_.Groups[1].Value })
-
-$promptEntries = $data -split '(?m)^\s*\},?\s*$'
-foreach ($entry in $promptEntries) {
-    $titleMatch = [regex]::Match($entry, '(?m)^\s*title:\s*"([^"]+)"')
-    if ($titleMatch.Success -and $entry -match '(?m)^\s*image:\s*"' -and $entry -notmatch '(?m)^\s*seoSlug:\s*"') {
-        throw "Prompt '$($titleMatch.Groups[1].Value)' has a sample image but no seoSlug."
-    }
-}
-
-if (@($slugs | Select-Object -Unique).Count -ne $slugs.Count) {
-    throw "Duplicate seoSlug values found in js/prompts-data.js."
-}
 
 [xml]$sitemap = Get-Content -Raw -Encoding UTF8 $sitemapPath
 $sitemapUrls = @($sitemap.SelectNodes("//*[local-name()='loc']") | ForEach-Object { $_.InnerText.Trim() })
@@ -31,6 +15,9 @@ if (@($sitemapUrls | Select-Object -Unique).Count -ne $sitemapUrls.Count) {
 
 if ($sitemapUrls -notcontains $siteBase) {
     throw "The homepage URL is missing from sitemap.xml."
+}
+if ($sitemapUrls.Count -ne 1) {
+    throw "sitemap.xml should contain only the single-page homepage URL."
 }
 
 $robots = Get-Content -Raw -Encoding UTF8 $robotsPath
@@ -90,90 +77,4 @@ foreach ($title in $promptTitles) {
     }
 }
 
-$pageFiles = @(Get-ChildItem -Path $promptsDirectory -Filter "*.html" -File)
-if ($pageFiles.Count -ne $slugs.Count) {
-    throw "Found $($slugs.Count) SEO slugs but $($pageFiles.Count) prompt detail pages."
-}
-
-$socialImages = @()
-foreach ($slug in $slugs) {
-    if ($slug -notmatch '^[a-z0-9]+(?:-[a-z0-9]+)*$') {
-        throw "Invalid seoSlug '$slug'; use lowercase letters, numbers, and hyphens."
-    }
-
-    $relativePage = "prompts/$slug.html"
-    $pagePath = Join-Path $repositoryRoot ($relativePage -replace '/', [IO.Path]::DirectorySeparatorChar)
-    if (-not (Test-Path -LiteralPath $pagePath -PathType Leaf)) {
-        throw "seoSlug '$slug' has no page at $relativePage."
-    }
-
-    $canonicalUrl = "${siteBase}${relativePage}"
-    if ($sitemapUrls -notcontains $canonicalUrl) {
-        throw "$canonicalUrl is missing from sitemap.xml."
-    }
-
-    $html = Get-Content -Raw -Encoding UTF8 $pagePath
-    if ($html -notmatch [regex]::Escape("href=`"$canonicalUrl`"")) {
-        throw "$relativePage does not declare its expected canonical URL."
-    }
-    if ($html -notmatch [regex]::Escape("property=`"og:url`" content=`"$canonicalUrl`"")) {
-        throw "$relativePage does not declare the matching Open Graph URL."
-    }
-
-    foreach ($property in @("og:title", "og:description", "og:image")) {
-        if ($html -notmatch [regex]::Escape("property=`"$property`"")) {
-            throw "$relativePage is missing $property metadata."
-        }
-    }
-    if ($html -notmatch [regex]::Escape("property=`"og:image:type`" content=`"image/jpeg`"")) {
-        throw "$relativePage Open Graph image must declare its JPEG media type."
-    }
-
-    foreach ($name in @("twitter:card", "twitter:title", "twitter:description", "twitter:image")) {
-        if ($html -notmatch [regex]::Escape("name=`"$name`"")) {
-            throw "$relativePage is missing $name metadata."
-        }
-    }
-
-    $ogImageMatch = [regex]::Match($html, '<meta\s+property="og:image"\s+content="([^"]+)"')
-    $twitterImageMatch = [regex]::Match($html, '<meta\s+name="twitter:image"\s+content="([^"]+)"')
-    if (-not $ogImageMatch.Success -or -not $twitterImageMatch.Success) {
-        throw "$relativePage has malformed social image metadata."
-    }
-
-    $ogImageUrl = $ogImageMatch.Groups[1].Value
-    if ($ogImageUrl -ne $twitterImageMatch.Groups[1].Value) {
-        throw "$relativePage Open Graph and Twitter images do not match."
-    }
-    if (-not $ogImageUrl.StartsWith($siteBase, [StringComparison]::OrdinalIgnoreCase)) {
-        throw "$relativePage social image URL must be absolute and hosted on the site."
-    }
-    $socialImages += $ogImageUrl
-
-    $socialImagePath = Join-Path $repositoryRoot ($ogImageUrl.Substring($siteBase.Length) -replace '/', [IO.Path]::DirectorySeparatorChar)
-    if (-not (Test-Path -LiteralPath $socialImagePath -PathType Leaf)) {
-        throw "$relativePage social image file does not exist: $socialImagePath."
-    }
-    if ([IO.Path]::GetExtension($socialImagePath) -notin @(".jpg", ".jpeg")) {
-        throw "$relativePage social image must be a JPEG."
-    }
-}
-
-if (@($socialImages | Select-Object -Unique).Count -ne $socialImages.Count) {
-    throw "Prompt detail pages must use unique page-specific social image URLs."
-}
-
-foreach ($page in $pageFiles) {
-    $relativePage = "prompts/$($page.Name)"
-    $expectedUrl = "${siteBase}${relativePage}"
-    if ($sitemapUrls -notcontains $expectedUrl) {
-        throw "$expectedUrl is missing from sitemap.xml."
-    }
-}
-
-$expectedUrls = @($siteBase) + @($pageFiles | ForEach-Object { "${siteBase}prompts/$($_.Name)" })
-if ($sitemapUrls.Count -ne $expectedUrls.Count) {
-    throw "sitemap.xml contains $($sitemapUrls.Count) URLs; expected exactly $($expectedUrls.Count) homepage and prompt-page URLs."
-}
-
-Write-Output "SEO check passed: $($slugs.Count) unique prompt pages have matching canonicals, social metadata, image files, and sitemap URLs."
+Write-Output "SEO check passed: the homepage is the sole catalog URL and has valid canonical and social metadata."

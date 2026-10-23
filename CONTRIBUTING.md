@@ -14,7 +14,7 @@ Thanks for helping improve the catalog. You can suggest a prompt through the **P
 
 1. Add the prompt to the catalog in `js/prompts-data.js`.
 2. Include `title`, `tag`, `category`, and `text`. `badge` is optional; use `Featured` only for hand-selected entries.
-3. If adding a `seoSlug`, create a matching, substantive page in `prompts/`, add its canonical URL to `sitemap.xml`, and update the homepage's static summary list.
+3. Update the homepage's static summary list in `index.html` when adding or renaming a prompt.
 4. Keep the prompt wording clear and check that the site still loads in a browser.
 5. In the pull request description, say which model you tested and what the prompt is intended to create.
 6. Run `powershell -ExecutionPolicy Bypass -File scripts/check-seo.ps1` before submitting.

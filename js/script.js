@@ -215,7 +215,7 @@
       <div class="card-body">
         <div class="card-top">
           <div>
-            <h3 class="card-title">${prompt.seoSlug ? `<a href="prompts/${escapeHtml(prompt.seoSlug)}.html">${escapeHtml(prompt.title)}</a>` : escapeHtml(prompt.title)}</h3>
+            <h3 class="card-title">${escapeHtml(prompt.title)}</h3>
             ${prompt.badge ? `<span class="prompt-badge">${escapeHtml(prompt.badge)}</span>` : ""}
           </div>
           <span class="tag-chip">${escapeHtml(prompt.category)}</span>

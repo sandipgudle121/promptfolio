@@ -20,7 +20,7 @@
 - Explore prompts for portraits, products, illustration, 3D scenes, travel, and more.
 - Search the catalog and filter by category.
 - Copy a prompt and adapt it for tools such as Gemini or ChatGPT.
-- Open featured prompts for complete examples, helpful usage tips, and related prompts.
+- Read and copy every prompt directly from the catalog.
 - Switch themes and browse a static catalog built with plain HTML, CSS, and JavaScript.
 
 ## 🚀 Visit the live site
@@ -31,7 +31,7 @@ No account or installation required.
 ## 🧭 Table of contents
 
 - [Add or edit a prompt](#add-or-edit-a-prompt)
-- [Create a prompt detail page](#create-a-prompt-detail-page)
+- [Validate changes](#validate-changes)
 - [Add sample images](#add-sample-images)
 - [Deploy with GitHub Pages](#deploy-with-github-pages)
 - [Contributing](#contributing)
@@ -39,14 +39,13 @@ No account or installation required.
 
 ## Add or edit a prompt
 
-Prompt data lives in `js/prompts-data.js`. Each item needs a title, tag, category, and prompt text. A sample image and `Featured` badge are optional. Every prompt with a sample image should also have a `seoSlug` that points to its detail page:
+Prompt data lives in `js/prompts-data.js`. Each item needs a title, tag, category, and prompt text. A sample image and `Featured` badge are optional:
 
 ```js
 {
   title: "Short name for the prompt",
   tag: "Studio portrait",
   category: "Portrait",
-  seoSlug: "studio-portrait",
   badge: "Featured",
   image: "assets/samples/example.jpg",
   text: "The complete prompt text a person will copy."
@@ -59,20 +58,9 @@ Available categories are `Portrait`, `Product`, `Illustration`, `3D`, `Travel`, 
 
 The homepage includes a static prompt summary for visitors and crawlers when JavaScript is unavailable. Keep it up to date when adding or renaming prompts.
 
-## Create a prompt detail page
+## Validate changes
 
-Detail pages are hand-authored in `prompts/`. They include an introduction, the complete prompt, usage guidance, related links, and page-specific metadata.
-
-For prompts with sample images, add a `seoSlug` and create its matching page in `prompts/`. Keep the page's prompt text aligned with `js/prompts-data.js`, and add the page's canonical URL to `sitemap.xml`.
-
-Each detail page needs:
-
-- A unique title, description, and canonical URL.
-- Matching Open Graph and Twitter titles/descriptions, a unique absolute social image URL, and `og:url`.
-- Its canonical URL in `sitemap.xml`.
-- Relevant internal links and useful instructions beyond simply repeating the prompt.
-
-Before publishing, run the consistency check:
+Before publishing, run the homepage SEO and catalog consistency check:
 
 ```powershell
 powershell -ExecutionPolicy Bypass -File scripts/check-seo.ps1
@@ -86,10 +74,10 @@ Put sample images in `assets/samples/`, then set the prompt's `image` path to th
 
 ## Deploy with GitHub Pages
 
-1. Keep `index.html`, `404.html`, `robots.txt`, and `sitemap.xml` at the repository root so GitHub Pages can serve the static site and custom not-found page directly. Application code is organized in `js/` and `css/`, prompt pages are in `prompts/`, and images and icons are in `assets/`.
+1. Keep `index.html`, `404.html`, `robots.txt`, and `sitemap.xml` at the repository root so GitHub Pages can serve the static site and custom not-found page directly. Application code is organized in `js/` and `css/`, and images and icons are in `assets/`.
 2. In the repository, open **Settings → Pages**.
 3. Under **Build and deployment**, select **Deploy from a branch**, choose `main` and `/(root)`, then save.
-4. Open the published site and confirm the homepage and prompt detail pages load.
+4. Open the published site and confirm the homepage and prompt catalog load.
 
 This repository is configured for **[sandipgudle121.github.io/promptfolio](https://sandipgudle121.github.io/promptfolio/)**. If the repository owner or name changes, update the canonical links, social metadata, `robots.txt`, and `sitemap.xml` to match the new URL.
 
