@@ -198,6 +198,23 @@
     const grid = section.querySelector(".card-grid");
     prompts.forEach((prompt, idx) => grid.appendChild(buildCard(catalog, prompt, idx)));
     sectionsRoot.appendChild(section);
+
+    const cards = [...grid.querySelectorAll(".card")];
+    if ("IntersectionObserver" in window) {
+      const observer = new IntersectionObserver((entries, cardObserver) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          entry.target.classList.add("is-visible");
+          cardObserver.unobserve(entry.target);
+        });
+      }, { threshold: 0.12, rootMargin: "0px 0px -32px 0px" });
+
+      cards.forEach((card, idx) => {
+        card.classList.add("card-reveal");
+        card.style.setProperty("--reveal-delay", `${(idx % 3) * 70}ms`);
+        observer.observe(card);
+      });
+    }
   }
 
   function buildCard(model, prompt, idx) {
